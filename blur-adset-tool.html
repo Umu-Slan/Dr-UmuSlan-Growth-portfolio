@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>أداة بلور أسماء الأد سيتس</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; padding: 1.5rem; max-width: 900px; margin: 0 auto; }
+    h1 { font-size: 1.25rem; margin-bottom: 1rem; }
+    .upload { margin-bottom: 1rem; }
+    input[type="file"] { display: block; margin: 0.5rem 0; }
+    button { background: #E85D4C; color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+    button:hover { background: #D94A3A; }
+    #preview { margin-top: 1rem; max-width: 100%; border: 1px solid #ddd; border-radius: 8px; }
+    .params { margin: 1rem 0; padding: 1rem; background: #f5f5f5; border-radius: 8px; }
+    .params label { display: inline-block; margin-left: 0.5rem; width: 120px; }
+    .params input { width: 60px; padding: 4px; }
+    p { color: #666; font-size: 0.9rem; margin: 0.5rem 0; }
+  </style>
+</head>
+<body>
+  <h1>أداة بلور أسماء الأد سيتس</h1>
+  <p>ارفع الصورة، ثم اضغط "تطبيق البلور" — النتيجة تظهر في الأسفل. انقر بالزر الأيمن واضغط "حفظ الصورة" لاستبدال ad-campaign-dashboard.png</p>
+  
+  <div class="upload">
+    <label>اختر الصورة:</label>
+    <input type="file" id="file" accept="image/png,image/jpeg,image/webp">
+  </div>
+
+  <div class="params">
+    <strong>ضبط الموقع (إن احتجت):</strong><br>
+    <label>بداية العمود %:</label><input type="number" id="left" value="13" min="0" max="50" step="0.5"><br>
+    <label>عرض العمود %:</label><input type="number" id="width" value="22" min="5" max="50" step="0.5"><br>
+    <label>أول صف %:</label><input type="number" id="rowTop" value="30" min="0" max="50" step="0.5"><br>
+    <label>ارتفاع الصف %:</label><input type="number" id="rowH" value="5.5" min="3" max="15" step="0.1"><br>
+    <label>المسافة بين الصفوف %:</label><input type="number" id="rowGap" value="8.5" min="5" max="15" step="0.1"><br>
+    <label>عدد الصفوف:</label><input type="number" id="rowCount" value="8" min="1" max="15"><br>
+  </div>
+
+  <button id="apply">تطبيق البلور</button>
+
+  <div id="result"></div>
+  <img id="preview" alt="النتيجة" style="display:none;">
+
+  <script>
+    const fileInput = document.getElementById('file');
+    const leftInput = document.getElementById('left');
+    const widthInput = document.getElementById('width');
+    const rowTopInput = document.getElementById('rowTop');
+    const rowHInput = document.getElementById('rowH');
+    const rowGapInput = document.getElementById('rowGap');
+    const rowCountInput = document.getElementById('rowCount');
+    const applyBtn = document.getElementById('apply');
+    const resultDiv = document.getElementById('result');
+    const previewImg = document.getElementById('preview');
+
+    let sourceImg = null;
+
+    fileInput.addEventListener('change', (e) => {
+      const f = e.target.files[0];
+      if (!f) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        sourceImg = new Image();
+        sourceImg.onload = () => { resultDiv.textContent = 'الصورة جاهزة. اضغط "تطبيق البلور"'; };
+        sourceImg.src = ev.target.result;
+      };
+      reader.readAsDataURL(f);
+    });
+
+    applyBtn.addEventListener('click', () => {
+      if (!sourceImg) { resultDiv.textContent = 'ارفع الصورة أولاً'; return; }
+
+      const w = sourceImg.naturalWidth;
+      const h = sourceImg.naturalHeight;
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+
+      ctx.drawImage(sourceImg, 0, 0);
+
+      const left = parseFloat(leftInput.value) / 100 * w;
+      const colW = parseFloat(widthInput.value) / 100 * w;
+      const rowTop = parseFloat(rowTopInput.value) / 100 * h;
+      const rowH = parseFloat(rowHInput.value) / 100 * h;
+      const rowGap = parseFloat(rowGapInput.value) / 100 * h;
+      const rowCount = parseInt(rowCountInput.value, 10);
+
+      ctx.filter = 'blur(12px)';
+
+      for (let i = 0; i < rowCount; i++) {
+        const top = rowTop + i * rowGap;
+        if (top + rowH > h) break;
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(left, top, colW, rowH);
+        ctx.clip();
+        ctx.drawImage(sourceImg, 0, 0);
+        ctx.restore();
+      }
+
+      ctx.filter = 'none';
+
+      const dataUrl = canvas.toDataURL('image/png');
+      previewImg.src = dataUrl;
+      previewImg.style.display = 'block';
+      resultDiv.innerHTML = '<p>تم. انقر بالزر الأيمن على الصورة واختر "حفظ الصورة كـ" ثم استبدل <strong>assets/ad-campaign-dashboard.png</strong></p>';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results Gallery — Dashboards, Designs, Results | Dr. UMU SLAN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">Dr. UMU SLAN</a>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="index.html#about">About</a>
+        <div class="nav-dropdown">
+          <button type="button" class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true" id="nav-expertise-trigger">Expertise <svg class="nav-dropdown-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="nav-dropdown-panel" id="nav-expertise-panel">
+            <a href="digital-marketing.html">Digital Marketing</a>
+            <a href="copywriting.html">Copywriting</a>
+            <a href="social-media-design.html">Social Media Design</a>
+            <a href="shopify.html">Shopify</a>
+            <a href="cro.html">CRO</a>
+            <a href="seo.html">SEO</a>
+            <a href="personal-branding.html">Personal Branding</a>
+            <a href="saas.html">SaaS</a>
+            <a href="automation.html">Automation</a>
+          </div>
+        </div>
+        <a href="screenshots.html" class="nav-active">Results Gallery</a>
+        <a href="case-studies.html">Case Studies</a>
+        <a href="blog.html">Blog</a>
+        <a href="index.html#contact" class="btn btn-primary">Book a call</a>
+      </nav>
+      <button class="mobile-menu-btn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Page Hero -->
+    <section class="screenshots-hero">
+      <div class="screenshots-hero-inner">
+        <span class="section-label reveal">Results Gallery</span>
+        <h1 class="screenshots-title reveal reveal-delay-1">Work in action.</h1>
+        <p class="screenshots-desc screenshots-desc-featured reveal reveal-delay-2">
+          <span class="desc-lead">Proof over promises.</span> Dashboards, designs, and delivered results—evidence of what I've built and shipped, ranked by impact.
+        </p>
+      </div>
+    </section>
+
+    <!-- Results Gallery Bento -->
+    <section class="screenshots-gallery screenshots-page">
+      <div class="screenshots-bento" aria-label="Results gallery grid"><!-- populated by initWorkSamples --></div>
+    </section>
+
+    <!-- Back CTA -->
+    <section class="cta cta-compact">
+      <h2 class="section-title reveal">Ready for similar results?</h2>
+      <p class="cta-subtitle reveal">Book a discovery call to discuss your project and how we can get there.</p>
+      <div class="cta-buttons reveal">
+        <a href="index.html#contact" class="btn btn-primary btn-lg">Book a call</a>
+        <a href="index.html" class="btn btn-secondary btn-lg">Back to home</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">Dr. UMU SLAN</a>
+      <p class="footer-tagline">Turn traffic into revenue. One person, full stack.</p>
+      <p class="footer-sub">Available for projects and retainer work.</p>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <a href="index.html">Home</a>
+          <a href="index.html#about">About</a>
+          <a href="index.html#expertise">Expertise</a>
+          <a href="screenshots.html">Results Gallery</a>
+          <a href="case-studies.html">Case Studies</a>
+          <a href="blog.html">Blog</a>
+          <a href="index.html#contact">Book a call</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">Dribbble</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">Privacy</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Dr. UMU SLAN. Built as portfolio.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="View image">
+    <div class="lightbox-content">
+      <button type="button" class="lightbox-prev" aria-label="Previous">‹</button>
+      <button type="button" class="lightbox-next" aria-label="Next">›</button>
+      <button type="button" class="lightbox-close" aria-label="Close">×</button>
+      <img src="" alt="">
+      <p class="lightbox-caption"></p>
+    </div>
+  </div>
+
+  <script src="work-samples-data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
