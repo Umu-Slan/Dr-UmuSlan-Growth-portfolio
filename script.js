@@ -4,7 +4,7 @@
  */
 
 // WhatsApp floating button — update with your number (country code, no + or 0)
-const WHATSAPP_NUMBER = '201234567890';
+const WHATSAPP_NUMBER = '966535835700';
 
 document.addEventListener('DOMContentLoaded', () => {
   initWorkSamples();
