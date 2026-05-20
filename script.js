@@ -3,12 +3,9 @@
  * Interactive behaviors + 2026 animations
  */
 
-<<<<<<< HEAD
-=======
 // WhatsApp floating button — update with your number (country code, no + or 0)
 const WHATSAPP_NUMBER = '966535835700';
 
->>>>>>> c0b4c9b73bbb91dce14995610feb999aab3cca4f
 document.addEventListener('DOMContentLoaded', () => {
   initWorkSamples();
   initWorkSamplesMarquee();
@@ -19,11 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeaderScroll();
   initStickyCTA();
   initScreenshotLightbox();
-<<<<<<< HEAD
-});
-
-/**
-=======
   initExpertiseDropdown();
   initNavExpertiseDropdown();
   initFloatingWhatsApp();
@@ -140,7 +132,6 @@ function initNavExpertiseDropdown() {
 }
 
 /**
->>>>>>> c0b4c9b73bbb91dce14995610feb999aab3cca4f
  * Results Gallery — نفس الترتيب على كل الصفحات
  * أولوية: الرسائل/اليد فورم أولاً (يهم العملاء)، ثم أقل تكلفة ← أعلى نتائج
  * زيارات بروفايل الانستا في الأخير
@@ -151,10 +142,6 @@ function initWorkSamples() {
   const bento = document.querySelector('.screenshots-bento');
   if (!data || !bento) return;
 
-<<<<<<< HEAD
-  const isFullPage = location.pathname.includes('screenshots');
-  const totalCount = data.length;
-=======
   const getService = (item) => {
     if (item.service) return item.service;
     const ind = (item.industry || '').toLowerCase();
@@ -182,27 +169,19 @@ function initWorkSamples() {
 
   const isFullPage = location.pathname.includes('screenshots');
   const totalCount = source.length;
->>>>>>> c0b4c9b73bbb91dce14995610feb999aab3cca4f
   const limit = isFullPage ? totalCount : 12;
 
   // أولوية النوع: Messaging + Lead أولاً، Profile visits في الآخر
   const metricPriority = (item) => {
     const ind = (item.industry || '').toLowerCase();
-<<<<<<< HEAD
-=======
     if (ind.includes('reels') || ind.includes('social media design')) return 5; // عينات الريلتس والتصميم في الآخر
->>>>>>> c0b4c9b73bbb91dce14995610feb999aab3cca4f
     if (ind.includes('messaging') || ind.includes('lead')) return 1; // الأهم للعملاء
     if (ind.includes('link')) return 2;
     if (ind.includes('profile')) return 4;  // زيارات انستا آخراً
     return 3; // post engagement وغيره
   };
 
-<<<<<<< HEAD
-  const sorted = [...data].sort((a, b) => {
-=======
   const sorted = [...source].sort((a, b) => {
->>>>>>> c0b4c9b73bbb91dce14995610feb999aab3cca4f
     const pA = metricPriority(a);
     const pB = metricPriority(b);
     if (pA !== pB) return pA - pB; // الرسائل والليد أولاً
@@ -247,15 +226,6 @@ function initWorkSamples() {
       </button>
     </div>`;
   }).join('');
-<<<<<<< HEAD
-}
-
-/**
- * Work Samples Marquee — homepage: marketing + Shopify mixed across 5 columns
- */
-function initWorkSamplesMarquee() {
-  const data = window.WORK_SAMPLES_DATA;
-=======
 
   // تحديث hero عند الفلترة حسب الخدمة (صفحة screenshots فقط)
   if (isFullPage && filterByService) {
@@ -279,18 +249,12 @@ function initWorkSamplesMarquee() {
 function initWorkSamplesMarquee() {
   const data = window.WORK_SAMPLES_DATA;
   // على صفحات الخدمات: استخدم القسم الذي فيه data-page-service (مثلاً shopify)
->>>>>>> c0b4c9b73bbb91dce14995610feb999aab3cca4f
   const serviceSection = document.querySelector('.work-in-action-marquee[data-page-service]');
   const section = serviceSection || document.querySelector('.work-in-action-marquee');
   const columns = section ? section.querySelectorAll('.ws-column') : [];
   if (!data || !columns.length) return;
 
   const pageService = section?.getAttribute('data-page-service') || null;
-<<<<<<< HEAD
-  const isServicePage = !!pageService;
-  const NUM_COLUMNS = columns.length;
-=======
->>>>>>> c0b4c9b73bbb91dce14995610feb999aab3cca4f
 
   const withSrc = (item) => item.src;
   const getService = (item) => {
@@ -315,10 +279,7 @@ function initWorkSamplesMarquee() {
     if (svc && byService[svc]) byService[svc].push(item);
   });
 
-<<<<<<< HEAD
-=======
   /* Marketing (index): curated mix — round-robin by sub-type, max 20 */
->>>>>>> c0b4c9b73bbb91dce14995610feb999aab3cca4f
   const metaMessaging = (byService.marketing || []).filter((i) => (i.industry || '').includes('Messaging'));
   const metaPost = (byService.marketing || []).filter((i) => (i.industry || '').includes('Post engagement'));
   const metaProfile = (byService.marketing || []).filter((i) => (i.industry || '').includes('Profile'));
@@ -334,10 +295,6 @@ function initWorkSamplesMarquee() {
     pi++;
   }
 
-<<<<<<< HEAD
-  const renderCards = (items) =>
-    items
-=======
   const allData = data.filter(withSrc);
   const fallback = allData.slice(0, 12);
 
@@ -404,19 +361,48 @@ function initWorkSamplesMarquee() {
     return;
   }
 
+  const interleavePools = (a, b, limit = 50) => {
+    const out = [];
+    const max = Math.max(a.length, b.length);
+    for (let i = 0; i < max && out.length < limit; i++) {
+      if (i < a.length) out.push(a[i]);
+      if (i < b.length) out.push(b[i]);
+    }
+    return out;
+  };
+
+  const marketingItems = marketingCurated.length
+    ? marketingCurated
+    : (byService.marketing || []).slice(0, 20);
+  const shopifyItems = (byService.shopify || []).slice(0, 20);
+  const mixed = interleavePools(marketingItems, shopifyItems, 50);
+
+  if (!mixed.length) {
+    columns.forEach((col) => col.classList.remove('ws-column-visible'));
+    return;
+  }
+
+  const columnItems = Array(NUM_COLUMNS)
+    .fill(null)
+    .map(() => []);
+  mixed.forEach((item, idx) => columnItems[idx % NUM_COLUMNS].push(item));
+
+  const HOME_LABELS = ['Marketing', 'Shopify', 'Marketing', 'Shopify', 'Marketing'];
+
   columns.forEach((col, i) => {
-    const serviceKey = SERVICE_ORDER[i];
     const track = col.querySelector('.ws-track');
     if (!track) return;
 
-    const items = getItemsForService(serviceKey, false);
+    const items = columnItems[i] || [];
     if (!items.length) {
       col.classList.remove('ws-column-visible');
       return;
     }
     col.classList.add('ws-column-visible');
+    const labelEl = col.querySelector('.ws-column-label');
+    if (labelEl) labelEl.textContent = HOME_LABELS[i] || 'Work';
+
     const html = items
->>>>>>> c0b4c9b73bbb91dce14995610feb999aab3cca4f
       .map((item) => {
         const alt = (item.alt || item.industry || '').replace(/"/g, '&quot;');
         const industry = (item.industry || '').replace(/"/g, '&quot;');
@@ -431,71 +417,7 @@ function initWorkSamplesMarquee() {
         </button>`;
       })
       .join('');
-<<<<<<< HEAD
-
-  const distributeToColumns = (items) => {
-    const cols = Array(NUM_COLUMNS).fill(null).map(() => []);
-    items.forEach((item, idx) => cols[idx % NUM_COLUMNS].push(item));
-    return cols;
-  };
-
-  const interleavePools = (a, b, limit = 50) => {
-    const out = [];
-    const max = Math.max(a.length, b.length);
-    for (let i = 0; i < max && out.length < limit; i++) {
-      if (i < a.length) out.push(a[i]);
-      if (i < b.length) out.push(b[i]);
-    }
-    return out;
-  };
-
-  if (isServicePage) {
-    section.classList.add('ws-five-col-same-service');
-    const items = pageService === 'marketing'
-      ? marketingCurated
-      : (byService[pageService] || []).slice(0, 50);
-    if (!items.length) return;
-
-    const columnItems = distributeToColumns(items);
-    const label = pageService.charAt(0).toUpperCase() + pageService.slice(1).replace('-', ' ');
-
-    columns.forEach((col, i) => {
-      const track = col.querySelector('.ws-track');
-      if (!track) return;
-      const labelEl = col.querySelector('.ws-column-label');
-      if (labelEl) labelEl.textContent = i === 0 ? label : '';
-      const html = renderCards(columnItems[i] || []);
-      track.innerHTML = html ? html + html : '';
-    });
-    return;
-  }
-
-  // Homepage: marketing + Shopify interleaved, spread across all 5 columns
-  const marketingItems = marketingCurated.length
-    ? marketingCurated
-    : (byService.marketing || []).slice(0, 20);
-  const shopifyItems = (byService.shopify || []).slice(0, 20);
-  const mixed = interleavePools(marketingItems, shopifyItems, 50);
-
-  if (!mixed.length) return;
-
-  const columnItems = distributeToColumns(mixed);
-  const HOME_LABELS = ['Marketing', 'Shopify', 'Marketing', 'Shopify', 'Marketing'];
-
-  columns.forEach((col, i) => {
-    const track = col.querySelector('.ws-track');
-    if (!track) return;
-    const items = columnItems[i] || [];
-    if (!items.length) return;
-
-    const labelEl = col.querySelector('.ws-column-label');
-    if (labelEl) labelEl.textContent = HOME_LABELS[i] || 'Work';
-
-    const html = renderCards(items);
-    track.innerHTML = html ? html + html : '';
-=======
     track.innerHTML = html + html;
->>>>>>> c0b4c9b73bbb91dce14995610feb999aab3cca4f
   });
 }
 
@@ -609,10 +531,7 @@ function initStickyCTA() {
 
 /**
  * Screenshot Lightbox - click results gallery items to view full size
-<<<<<<< HEAD
-=======
  * Supports prev/next navigation via keyboard (← →) and on-screen arrows
->>>>>>> c0b4c9b73bbb91dce14995610feb999aab3cca4f
  */
 function initScreenshotLightbox() {
   const lightbox = document.getElementById('lightbox');
@@ -621,13 +540,6 @@ function initScreenshotLightbox() {
   const img = lightbox.querySelector('img');
   const caption = lightbox.querySelector('.lightbox-caption');
   const closeBtn = lightbox.querySelector('.lightbox-close');
-<<<<<<< HEAD
-
-  function openLightbox(src, alt) {
-    img.src = src;
-    img.alt = alt || '';
-    caption.textContent = alt || '';
-=======
   const prevBtn = lightbox.querySelector('.lightbox-prev');
   const nextBtn = lightbox.querySelector('.lightbox-next');
 
@@ -683,7 +595,6 @@ function initScreenshotLightbox() {
     const idx = items.findIndex((i) => i.src === src);
     currentIndex = idx >= 0 ? idx : 0;
     showItem(currentIndex);
->>>>>>> c0b4c9b73bbb91dce14995610feb999aab3cca4f
     lightbox.classList.add('is-open');
     document.body.style.overflow = 'hidden';
   }
@@ -704,8 +615,6 @@ function initScreenshotLightbox() {
     }
   });
 
-<<<<<<< HEAD
-=======
   document.querySelectorAll('.service-sample[data-lightbox-src], .gfx-item[data-lightbox-src]').forEach((btn) => {
     const src = btn.getAttribute('data-lightbox-src');
     const alt = btn.getAttribute('data-lightbox-alt') || '';
@@ -713,15 +622,11 @@ function initScreenshotLightbox() {
   });
 
   /* Event delegation for ws-cards (dynamically created by marquee) */
->>>>>>> c0b4c9b73bbb91dce14995610feb999aab3cca4f
   document.addEventListener('click', (e) => {
     const card = e.target.closest('.ws-card[data-lightbox-src]');
     if (card) {
       e.preventDefault();
-<<<<<<< HEAD
-=======
       e.stopPropagation();
->>>>>>> c0b4c9b73bbb91dce14995610feb999aab3cca4f
       const src = card.getAttribute('data-lightbox-src');
       const alt = card.getAttribute('data-lightbox-alt') || '';
       if (src) openLightbox(src, alt);
@@ -729,11 +634,6 @@ function initScreenshotLightbox() {
   }, true);
 
   if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
-<<<<<<< HEAD
-  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
-}
-=======
   if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goPrev(); });
   if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goNext(); });
   lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
@@ -745,4 +645,3 @@ function initScreenshotLightbox() {
   });
 }
 
->>>>>>> c0b4c9b73bbb91dce14995610feb999aab3cca4f
